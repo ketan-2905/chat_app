@@ -5,7 +5,7 @@ import generateToken from "../utils/generateToken";
 
 export const signIn = async (req: Request, res: Response) => {
   try {
-    const { userName, fullName, email, password, confromPassword, gender } =
+    const { userName, fullName, email, password, confirmPassword, gender } =
       req.body;
 
     if (
@@ -13,14 +13,14 @@ export const signIn = async (req: Request, res: Response) => {
       !fullName ||
       !email ||
       !password ||
-      !confromPassword ||
+      !confirmPassword ||
       !gender
     ) {
       res.status(400).send({ message: "Please fill all fields" });
       return;
     }
 
-    if (password !== confromPassword) {
+    if (password !== confirmPassword) {
       res.status(400).send({ message: "Confirm password dose't match" });
       return;
     }
@@ -67,7 +67,10 @@ export const signIn = async (req: Request, res: Response) => {
       res.status(400).send("Invalid user data");
     }
   } catch (error: any) {
-    res.status(500).send("Invalid server Erroe");
+    res.status(500).send({message:{
+      error: error,
+      text:"Invalid server Erroe",
+    }});
   }
 };
 

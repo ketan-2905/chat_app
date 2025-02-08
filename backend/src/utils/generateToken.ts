@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken"
 import {Response} from "express"
 
-const  generateToken = (userId: string, res: Response) =>{
+const  generateToken = (userName: string, res: Response) =>{
 
-    const token = jwt.sign({userId},process.env.JWT_SECRETE!,{
+    const token = jwt.sign({userName},process.env.JWT_SECRETE!,{
         expiresIn: "15d"
     })
 
