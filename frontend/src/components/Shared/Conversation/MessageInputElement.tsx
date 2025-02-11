@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Send } from "lucide-react";
-import MenueItem from "../Shared/Navagation/UserOption/MenueItem"
+import MenueItem from "../Navagation/UserOption/MenueItem"
 
 
 const MessageInputElement = () => {

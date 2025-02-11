@@ -119,17 +119,21 @@ export const logout = (req: Request, res: Response) => {
 };
 
 export const getMe = async (req: Request, res: Response) => {
-  const user = await prisma.user.findUnique({where: {id: req.user.id}})
+  try {
+    const user = await prisma.user.findUnique({where: {id: req.user.id}})
 
-  if (!user) {
-    res.status(404).send({ message: "User not found" });
-    return;
+    if (!user) {
+      res.status(400).send({ message: "User not found" });
+      return;
+    }
+  
+    res.status(200).send({
+      id: user.id,
+      userName: user.userName,
+      fullName: user.fullName,
+      profileImageSrc: user.profileImageSrc,
+    });
+  } catch (error: any) {
+    res.status(500).send({ message: "Internal server Error" });
   }
-
-  res.status(200).send({
-    id: user.id,
-    userName: user.userName,
-    fullName: user.fullName,
-    profileImageSrc: user.profileImageSrc,
-  });
 };

@@ -13,6 +13,8 @@ export default {
         background: "rgba(var(--background))",
         "cta-background": "rgba(var(--cta-background))",
         "message-background":"rgba(var(--message-background))",
+        "message-day-background":"rgba(var(--message-day-background))",
+        "button-background":"rgba(var(--button-background))",
         border: "rgba(var(--border))",
         card: "rgba(var(--card))",
         "copy-primary": "rgba(var(--copy-primary))",

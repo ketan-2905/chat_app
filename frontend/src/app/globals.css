@@ -6,7 +6,10 @@
   --background: 245, 245, 245;
   --cta-background: 197, 197, 197;
 
-  --message-background:237, 239, 241;
+  --message-background:234, 234, 234;
+  --message-day-background:200, 200, 200;
+
+  --button-background: 21, 21, 24;
 
   --border: 212, 212, 212;
   --card: 255, 255, 255;
@@ -15,11 +18,11 @@
   --copy-secondary: 115, 115, 115;
 
   --cta: 139, 92, 246;
-  --cta-active: 124, 58, 237;
+  --cta-active: 124, 58, 255;
   --cta-text: 255, 255, 255;
 
   background: rgba(var(--background));
-  /* color: rgb(58, 58, 58); */
+  color: rgb(188, 188, 188);
 
 }
 
@@ -28,6 +31,9 @@
   --cta-background: 58, 58, 58;
 
   --message-background:29, 29, 29;
+  --message-day-background:63, 63, 63;
+
+  --button-background: 245, 245, 245;
 
   --border: 38, 38, 38;
   --card: 23, 23, 23;

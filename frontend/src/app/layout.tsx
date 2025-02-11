@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navgation from "@/components/Shared/Navagation/Navgation";
-import { ThemeProvider } from "../context/ThemeContext";
-import Conversation from "@/components/Conversation/Conversation";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthContextprovider } from "@/context/AuthContext";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -14,19 +12,12 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) { 
   return (
     <html lang="en">
-      <body
-        className={` ${poppins.className} antialiased`}
-      >
+      <body className={` ${poppins.className} antialiased`}>
         <ThemeProvider>
-           <div className="flex">
-           <Navgation />
-           <Conversation />
-           </div>
-
-           {children}
+          <AuthContextprovider>{children}</AuthContextprovider>
         </ThemeProvider>
       </body>
     </html>

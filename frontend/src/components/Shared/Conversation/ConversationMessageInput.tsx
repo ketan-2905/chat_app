@@ -1,5 +1,5 @@
 "use client"
-import MenueItem from '../Shared/Navagation/UserOption/MenueItem'
+import MenueItem from '../Navagation/UserOption/MenueItem'
 import { MessageSquare, Users, Sun, Phone, Video, Send, Plus, X, User, Moon, Settings, Link   } from "lucide-react";
 import MessageInputElement from './MessageInputElement';
 

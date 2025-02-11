@@ -1,43 +1,36 @@
+import { format, isToday, isYesterday, differenceInDays } from "date-fns";
 import { Message } from "../../lib/types";
 
-const daySeparator = (messages: Message) => {
+const getMessagesFormated = (messages: Message[]): Message[] => {
+  let sortedAsc: Message[] = [];
+  let currentDay = "";
   const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  const formattedMessages = [];
-  let lastDateLabel = null;
-
-  messages.forEach((msg) => {
-    const msgDate = new Date(msg.time);
-    const msgDateString = msgDate.toISOString().split("T")[0]; // YYYY-MM-DD
-
-    let label;
-
-    if (msgDate.toDateString() === today.toDateString()) {
-      label = "Today";
-    } else if (msgDate.toDateString() === yesterday.toDateString()) {
-      label = "Yesterday";
-    } else if ((today - msgDate) / (1000 * 60 * 60 * 24) <= 7) {
-      label = "Last 7 Days";
-    } else {
-      label = msgDateString;
+  messages.map((message, index) => {
+    let day = "";
+    const daysDifference = differenceInDays(today, message.time);
+    if (isToday(message.time)) {
+      day = "Today";
+    }else if(isYesterday(message.time)) {
+      day = "Yesterday";
+    }else if(daysDifference <= 7) {
+        day = format(new Date(message.time), "EEEE")
+    }else{
+        day = format(new Date(message.time), "MMM dd, yyyy")
     }
-
-    if (label !== lastDateLabel) {
-      formattedMessages.push({ type: "date", date: label });
-      lastDateLabel = label;
+    message.time = format(new Date(message.time), "HH:mm")
+    if (currentDay !== day) {
+      const messageDay = {
+        message: "",
+        time: "",
+        type: "date",
+        day: day,
+      };
+      sortedAsc.push(messageDay)
+      sortedAsc.push(message)
+      currentDay = day;
     }
-
-    formattedMessages.push(msg);
   });
-
-  return formattedMessages;
+  return sortedAsc;
 };
 
-// Example usage
-const groupedMessages = groupMessagesByDate(chatData.messages);
-console.log(groupedMessages);
-
-export default daySeparator;
-
+export default getMessagesFormated
