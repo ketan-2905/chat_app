@@ -1,5 +1,7 @@
 "use client";
+import axios from "axios";
 import API from "../../lib/axios";
+import { ApiError, AuthUser } from "../../lib/types";
 import {
   createContext,
   Dispatch,
@@ -10,12 +12,7 @@ import {
   useState,
 } from "react";
 
-type AuthType = {
-  id: string;
-  userName: string;
-  fullName: string;
-  profileImageSrc: string;
-};
+type AuthType = AuthUser;
 
 type AuthContextType = {
   authUser: AuthType | null;
@@ -30,8 +27,8 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const useAuthContext = () => {
-  return useContext(AuthContext)
-} 
+  return useContext(AuthContext);
+};
 
 export const AuthContextprovider: React.FC<PropsWithChildren> = ({
   children,
@@ -41,21 +38,35 @@ export const AuthContextprovider: React.FC<PropsWithChildren> = ({
 
   useEffect(() => {
     const fetchUser = async () => {
-        try {
-          const user = await API.get("auth/me")
-          if(!user.data){
-            throw new Error(user.data.message)
-          }
-          setAuthUser(user.data)
-        } catch (error) {
-          console.error(error)
-        }finally{
-          setIsLoading(false)
+      try {
+        const user = await API.get("/auth/me");
+        if (!user.data) {
+          throw new Error(user.data.message);
         }
-    }
+        setAuthUser(user.data);
+      } catch (error: any) {
+        if (axios.isAxiosError(error) && error.response?.data) {
+          console.log(error)
+          let erromsg ="" 
+          const errorData = error.response.data as ApiError;
+          
+          // Handle both string and object message formats
+          if (typeof errorData.message === 'string') {
+            erromsg = errorData.message;
+          } else {
+            erromsg = "An unknown error occurred";
+          }
+          console.error(erromsg);
+        }
+        console.error(error);
 
-    fetchUser()
-  },[])
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ authUser, setAuthUser, isLoading }}>

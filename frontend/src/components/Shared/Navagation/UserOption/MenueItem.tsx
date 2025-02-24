@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 
 
 interface MenueItemProps{
-    onClick: ()=>void,
+    onClick?: ()=> void,
     className?: string,
 }
 

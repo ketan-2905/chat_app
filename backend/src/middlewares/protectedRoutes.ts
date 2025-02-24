@@ -28,7 +28,8 @@ const protectedRoute = async (
       res.status(401).send({ message: "Unauthorised - No token provided" });
       return;
     }
-    const decoded = jwt.verify(token, process.env.JWT_SECRETE!) as DecodeToken;
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodeToken;
 
     if (!decoded) {
       res
@@ -38,14 +39,14 @@ const protectedRoute = async (
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { userName: decoded.userName },
       select: {
         id: true,
       },
     });
 
     if (!user) {
-      res.status(404).json({ error: "User not found" });
+      res.status(404).json({ error: "User not found" , user: user, userName: decoded.userName });
       return;
     }
 
@@ -53,7 +54,9 @@ const protectedRoute = async (
 
     next();
   } catch (error: any) {
-    res.status(500).send({ message: "Internal Server error" });
+    res.status(500).send({
+      message: "Internal Server error from protectedRoute",
+    });
   }
 };
 

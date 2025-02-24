@@ -12,9 +12,12 @@ export default {
       colors: {
         background: "rgba(var(--background))",
         "cta-background": "rgba(var(--cta-background))",
+        "pop-background": "rgba(var(--pop-background))",
         "message-background":"rgba(var(--message-background))",
+        "modal-background":"rgba(var( --modal-background))",
         "message-day-background":"rgba(var(--message-day-background))",
         "button-background":"rgba(var(--button-background))",
+        "sidebar-open-background":"rgba(var(--sidebar-open-background))",
         border: "rgba(var(--border))",
         card: "rgba(var(--card))",
         "copy-primary": "rgba(var(--copy-primary))",
@@ -24,6 +27,8 @@ export default {
         "cta-text": "rgba(var(--cta-text))",
 
         grape: "rgba(var(--grape))",
+        scrollbarTrack: "rgba(var(--scrollbarTrack))",
+        scrollbarThumb: "rgba(var(--scrollbarThumb))",
       },
     },
   },

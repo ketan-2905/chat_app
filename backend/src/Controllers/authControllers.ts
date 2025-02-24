@@ -3,7 +3,7 @@ import bcryptjs from "bcryptjs";
 import prisma from "../db/prisma";
 import generateToken from "../utils/generateToken";
 
-export const signIn = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
     const { userName, fullName, email, password, confirmPassword, gender } =
       req.body;
@@ -96,7 +96,7 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
-    generateToken(user.id, res);
+    generateToken(user.userName, res);
 
     res.status(200).send({
       id: user.id,
@@ -134,6 +134,6 @@ export const getMe = async (req: Request, res: Response) => {
       profileImageSrc: user.profileImageSrc,
     });
   } catch (error: any) {
-    res.status(500).send({ message: "Internal server Error" });
+    res.status(500).send({ message: "Internal server Error from getMe" });
   }
 };

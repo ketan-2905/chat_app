@@ -1,12 +1,12 @@
 import express from "express"
-import { getMe, login, logout, signIn } from "../Controllers/authControllers"
+import { getMe, login, logout, signUp } from "../Controllers/authControllers"
 import protectedRoute from "../middlewares/protectedRoutes"
 
 const route = express.Router()
 
 route.get("/me",protectedRoute , getMe)
 
-route.post("/signin",signIn)
+route.post("/signup",signUp)
 route.post("/login",login)
 route.post("/logout",logout)
 

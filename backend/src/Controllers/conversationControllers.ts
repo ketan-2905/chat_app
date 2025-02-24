@@ -11,6 +11,9 @@ export const getConversations = async (req: Request, res: Response) => {
           participatonIds : {
             hasSome : [userId]
           }
+        },
+        orderBy:{
+          updateAt:"asc"
         }
       })
   

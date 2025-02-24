@@ -1,13 +1,12 @@
 "use client"
-import { useContext } from 'react'
+import useWindowWidth from '@/hooks/useWindowWidth '
 import Sidebar from './Sidebar/Sidebar'
-import { ThemeProvider, useTheme } from '@/context/ThemeContext'
 
 
 const Navgation = () => {
-  const {theme} = useTheme()
+  const width = useWindowWidth()
   return (
-    <nav className='h-screen w-1/3'>
+    <nav className='h-screen md:w-[50%] lg:w-1/3'>
         <Sidebar />
     </nav >
   )

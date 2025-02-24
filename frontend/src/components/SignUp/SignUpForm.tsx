@@ -1,10 +1,10 @@
 "use client";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import Input from "../Shared/Input";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import RadioButtons from "../Shared/RadioButton";
+import useSignUp from "@/hooks/useSignUp";
 
 const schema = z
   .object({
@@ -12,10 +12,6 @@ const schema = z
     lastName: z.string().min(3, "Last Name be at least 3 characters"),
     userName: z.string().min(3, "User Name must be at least 3 characters"),
     email: z.string().email("Invalid email format"),
-    age: z.coerce
-      .number()
-      .min(18, "Must be at least 18")
-      .max(60, "Must be 60 or below"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -31,9 +27,14 @@ const schema = z
     confirmPassword: z.string(),
     gender: z.enum(["male", "female"], { message: "please select Gender" }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords must match",
-    path: ["confirmPassword"],
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        path: ["confirmPassword"],
+        message: "Passwords must match",
+        code: z.ZodIssueCode.custom,
+      });
+    }
   });
 
 const inputFields = [
@@ -64,20 +65,33 @@ const inputFields = [
 ];
 
 const SignUpForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     resolver: zodResolver(schema),
   });
 
-  const selectValue = watch("gender")
+  const selectValue = watch("gender");
+  const { isLoading ,signUp } = useSignUp();
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const user = {
+      userName: data.userName,
+      fullName: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      gender: data.gender,
+
+    };
+    signUp(user);
+    reset()
   };
   return (
     <div className="w-[100%]  md:w-[50%] h-screen flex flex-col gap-2 justify-center items-center">
@@ -89,7 +103,10 @@ const SignUpForm = () => {
           <h1 className="text-copy-primary">Create an account</h1>
           <h2 className="text-copy-secondary">
             Already have an account?{" "}
-            <a href="/login" className="underline-offset-1 underline text-sky-700">
+            <a
+              href="/login"
+              className="underline-offset-1 underline text-sky-700"
+            >
               Sign In/Login
             </a>
           </h2>
@@ -153,15 +170,18 @@ const SignUpForm = () => {
         )}
         <div className=" w-full flex">
           <button
-            onClick={handleSubmit(onSubmit)}
-            className={`w-1/2 cursor-pointer text-slate-50 px-4 py-2 rounded-md outline-none border-[1px] bg-button-background`}
             type="submit"
+            className={`w-1/2 cursor-pointer text-slate-50 px-4 py-2 rounded-md outline-none border-[1px] bg-button-background flex justify-center items-center`}
           >
-            Create Account ?
+            {isLoading ? <div className="w-7 h-7 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+  :"Sign up"}
           </button>
+
           <a
             href="/login"
-            className="w-1/2 text-sky-400 text-center cursor-pointer px-4 py-2 rounded-md outline-none border-[1px] bg-button-background"
+            className={`w-1/2 text-sky-400 text-center cursor-pointer px-4 py-2 rounded-md outline-none border-[1px] bg-button-background ${
+              isLoading ? "pointer-events-none" : ""
+            }`}
           >
             Sign In/Login
           </a>

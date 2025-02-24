@@ -8,10 +8,10 @@ import { useEffect } from "react";
 export default function SignUp() {
   const { authUser, isLoading } = useAuthContext();
   const router = useRouter();
-
+  
   useEffect(() => {
-    if (isLoading && authUser) {
-      router.push("/"); // Redirect if not logged in
+    if (!isLoading && authUser) {
+      router.push("/login"); // Redirect if not logged in
     }
   }, [authUser, isLoading, router]);
   return (

@@ -23,6 +23,7 @@ const Avatar: React.FC<AvatarProps> = ({
   className,
   size = AvatarSize.medium,
 }) => {
+
   return (
     <div
     style={{

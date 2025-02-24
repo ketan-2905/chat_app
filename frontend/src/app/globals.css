@@ -2,9 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-.light {
+@layer utilities {
+  /* Scrollbar Styling */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: theme('colors.scrollbarTrack'); /* Dark background */
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: theme('colors.scrollbarThumb'); /* Scroll thumb color */
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: lighten(theme('colors.scrollbarThumb'), 10%);
+  }
+}
+
+
+/* .light {
   --background: 245, 245, 245;
   --cta-background: 197, 197, 197;
+  --pop-background: 234, 234, 234;
 
   --message-background:234, 234, 234;
   --message-day-background:200, 200, 200;
@@ -22,13 +45,14 @@
   --cta-text: 255, 255, 255;
 
   background: rgba(var(--background));
-  color: rgb(188, 188, 188);
+  color: rgb(65, 65, 65);
 
 }
 
 .dark {
   --background: 0, 0, 0;
   --cta-background: 58, 58, 58;
+  --pop-background: 29, 29, 29;
 
   --message-background:29, 29, 29;
   --message-day-background:63, 63, 63;
@@ -46,7 +70,70 @@
   --cta-text: 255, 255, 255;
 
   background: rgba(var(--background));
+} */
+
+.light {
+  --background: 245, 245, 245; /* Soft light gray */
+  --cta-background: 220, 220, 220; /* Slightly darker gray for CTA */
+  --pop-background: 230, 230, 230; /* Lighter for popups/modals */
+
+  --modal-background: 255, 255, 255; /* White modal background */
+
+  --message-background: 240, 240, 240; 
+  --message-day-background: 210, 210, 210;
+
+  --button-background: 30, 30, 30; /* Dark for contrast */
+
+  --border: 200, 200, 200;
+  --card: 255, 255, 255;
+
+  --copy-primary: 20, 20, 20; /* Almost black */
+  --copy-secondary: 100, 100, 100;
+
+  --cta: 110, 80, 250;
+  --cta-active: 90, 60, 240;
+  --cta-text: 255, 255, 255;
+
+  --scrollbarTrack: 160, 160, 160;
+  --scrollbarThumb: 240, 240, 240;
+
+  --sidebar-open-background:253, 253, 253, 0.80;
+
+  background: rgba(var(--background));
+
+  /* color: rgba(16, 21, 33, 0.80); */
 }
+
+.dark {
+  --background: 10, 10, 10; /* Deep black */
+  --cta-background: 45, 45, 45; /* Darker CTA */
+  --pop-background: 25, 25, 25; /* Pop-up background */
+
+  --modal-background: 15, 15, 15; /* Slightly off-black for modals */
+
+  --message-background: 35, 35, 35;
+  --message-day-background: 70, 70, 70;
+
+  --button-background: 230, 230, 230; /* Lighter for visibility */
+
+  --border: 50, 50, 50;
+  --card: 30, 30, 30;
+
+  --copy-primary: 240, 240, 240; /* Off-white */
+  --copy-secondary: 160, 160, 160;
+
+  --cta: 90, 100, 250;
+  --cta-active: 70, 80, 230;
+  --cta-text: 255, 255, 255;
+
+  --scrollbarTrack: 26, 26, 26;
+  --scrollbarThumb: 90, 90, 90;
+
+  --sidebar-open-background:16, 21, 33, 0.80;
+
+  background: rgba(var(--background));
+}
+
 
 body {
   color: var(--foreground);
